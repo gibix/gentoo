@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_4 python3_5 python3_6 python3_7 )
 
 inherit llvm meson multilib-minimal pax-utils python-any-r1
 
@@ -47,9 +47,11 @@ REQUIRED_USE="
 	openmax? ( gallium )
 	gles1?  ( egl )
 	gles2?  ( egl )
+	lm_sensors? ( gallium )
 	vaapi? ( gallium )
 	vdpau? ( gallium )
-	vulkan? ( || ( video_cards_i965 video_cards_radeonsi )
+	vulkan? ( dri3
+			  || ( video_cards_i965 video_cards_radeonsi )
 			  video_cards_radeonsi? ( llvm ) )
 	wayland? ( egl gbm )
 	xa?  ( gallium )
@@ -222,6 +224,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	valgrind? ( dev-util/valgrind )
 	x11-base/xorg-proto
+	x11-libs/libXrandr
 	$(python_gen_any_dep ">=dev-python/mako-0.7.3[\${PYTHON_USEDEP}]")
 "
 
@@ -309,11 +312,15 @@ multilib_src_configure() {
 		gallium_enable video_cards_vivante etnaviv
 		gallium_enable video_cards_vmware svga
 		gallium_enable video_cards_nouveau nouveau
-		gallium_enable video_cards_i915 i915
 		gallium_enable video_cards_imx imx
-		if ! use video_cards_i915 && \
-			! use video_cards_i965; then
-			gallium_enable video_cards_intel i915
+
+		# Only one i915 driver (classic vs gallium). Default to classic.
+		if ! use classic; then
+			gallium_enable video_cards_i915 i915
+			if ! use video_cards_i915 && \
+				! use video_cards_i965; then
+				gallium_enable video_cards_intel i915
+			fi
 		fi
 
 		gallium_enable video_cards_r300 r300

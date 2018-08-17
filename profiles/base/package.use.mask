@@ -7,11 +7,6 @@
 # This file is only for generic masks. For arch-specific masks (i.e.
 # mask everywhere, unmask on arch/*) use arch/base.
 
-# Mike Gilbert <floppym@gentoo.org> (05 Aug 2018)
-# Fails to build.
-# https://bugs.gentoo.org/661880
->=www-client/chromium-69 system-icu
-
 # Andreas K. Hüttel <dilfridge@gentoo.org> (3 Aug 2018)
 # New and for Gentoo still quite experimental. You've been
 # warned. (Also, works only on x86_64 and with certain CPUs
@@ -35,14 +30,11 @@ sci-libs/ViSP qt4
 # Andreas Sturmlechner <asturm@gentoo.org> (18 Jun 2018)
 # dev-python/PyQt4 and dev-python/pyside are dead and going away.
 dev-python/pandas X
-media-sound/pulseaudio qt4
 media-video/syncplay gui
 net-wireless/gnuradio qt4
 
 # Pacho Ramos <pacho@gentoo.org> (17 Jun 2018)
 # dev-libs/DirectFB is being removed (#606194)
-media-libs/libsdl2 fusionsound
-media-libs/xine-lib fusionsound
 www-plugins/gnash directfb
 
 # Michał Górny <mgorny@gentoo.org> (13 Jun 2018)
@@ -180,6 +172,7 @@ sci-physics/root qt4
 # Depends on >=icu-59, still masked.
 >=www-client/chromium-62.0.3202.9 system-icu
 >=www-client/firefox-56.0 system-icu
+>=mail-client/thunderbird-60.0 system-icu
 
 # Andreas K. Huettel <dilfridge@gentoo.org> (9 Sep 2017)
 # Potentially destructive. Use it only if you know what you're doing.
@@ -614,10 +607,6 @@ net-analyzer/net-snmp pci
 # Diego Elio Pettenò (20 Aug 2012)
 # The prevent-removal USE flag is only implemented for Linux.
 sys-auth/pam_mktemp prevent-removal
-
-# Andreas K. Huettel <dilfridge@gentoo.org> (25 Mai 2012)
-# Requires icc which does not emerge (distfile unavailable)
-media-libs/opencv ipp
 
 # Samuli Suominen <ssuominen@gentoo.org> (20 Mar 2012)
 # This is for udev-acl. Unmasked in default/linux/package.use.mask.

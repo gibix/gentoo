@@ -19,7 +19,7 @@ else
 	else
 		SRC_URI="https://download.videolan.org/pub/videolan/testing/${MY_P}/${MY_P}.tar.xz"
 	fi
-	KEYWORDS="amd64 ~arm ~arm64 ~ppc ppc64 -sparc x86 ~x86-fbsd"
+	KEYWORDS="amd64 ~arm ~arm64 ppc ppc64 -sparc x86 ~x86-fbsd"
 fi
 inherit autotools flag-o-matic gnome2-utils toolchain-funcs versionator virtualx xdg-utils ${SCM}
 
@@ -201,7 +201,13 @@ RDEPEND="
 	vorbis? ( media-libs/libvorbis:0 )
 	vpx? ( media-libs/libvpx:0= )
 	wayland? (
-		dev-libs/wayland
+		|| (
+			>=dev-libs/wayland-1.15
+			(
+				<dev-libs/wayland-1.15
+				<media-libs/mesa-18.1.1-r1[egl]
+			)
+		)
 		dev-libs/wayland-protocols
 	)
 	X? (
@@ -230,6 +236,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.2.8-freerdp-2.patch # bug 590164
 	"${FILESDIR}"/${PN}-3.0.1-qt-5.11.patch # TODO upstream
 	"${FILESDIR}"/${P}-fix-disable-vlm.patch # bug 649798
+	"${FILESDIR}"/${P}-fribidi-1.patch # bug 662662
 )
 
 DOCS=( AUTHORS THANKS NEWS README doc/fortunes.txt )
